@@ -1,13 +1,19 @@
 <template>
-  <div class="user">用户管理</div>
+  <div class="user">
+    <user-List></user-List>
+  </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue'
+import userList from './components/userList.vue'
 
 export default Vue.extend({
-  name: 'userIndex'
+  name: 'userIndex',
+  components: {
+    userList
+  }
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scope></style>
