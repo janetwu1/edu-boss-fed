@@ -10,5 +10,8 @@ declare global {
     interface IntrinsicElements {
       [elem: string]: any;
     }
+    interface Window {
+      AliyunUpload: any;
+    }
   }
 }

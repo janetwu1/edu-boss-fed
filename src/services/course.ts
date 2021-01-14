@@ -13,10 +13,13 @@ export const changeState = (params: any) => {
 }
 
 // 通过课程Id获取课程信息 /boss/course/getCourseById
-export const getCourseById = () => {
+export const getCourseById = (courseId: string | number) => {
   return request({
     method: 'GET',
-    url: '/boss/course/getCourseById'
+    url: '/boss/course/getCourseById',
+    params: {
+      courseId
+    }
   })
 }
 
@@ -41,7 +44,7 @@ export const saveOrUpdateCourse = (data: any) => {
 }
 
 // 上传图片
-export const uploadCourseImage = (data: any, onUploadProgress: (ProgressEvent: ProgressEvent) => void) => {
+export const uploadCourseImage = (data: any, onUploadProgress?: (ProgressEvent: ProgressEvent) => void) => {
   // 该接口请求要求的类型数据是multipart/form-data,所以需要提交 FormDate数据对象
   return request({
     method: 'POST',
