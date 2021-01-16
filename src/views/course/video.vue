@@ -38,8 +38,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
+<script>
+/* eslint-disable */
 import axios from 'axios'
 import {
   getAliyunVideoUploadAddressAdnAuth,
@@ -50,7 +50,7 @@ import {
 import { getCourseById } from '.././../services/course'
 import { getBySectionId, getSectionAndLesson } from '../../services/course-section'
 import { getById } from '../../services/course-lesson'
-export default Vue.extend({
+export default({
   name: 'CourseVideo',
   props: {
     courseId: {
@@ -119,7 +119,7 @@ export default Vue.extend({
         // 网络原因失败时，重新上传间隔时间，默认为2秒
         retryDuration: 2,
         // 开始上传
-        onUploadstarted: async (uploadInfo: any) => {
+        onUploadstarted: async (uploadInfo) => {
           console.log('onUploadstarted', uploadInfo)
           // 1. 通过我们的后端获取上传凭证
           let uploadAddressAndAuth
@@ -140,7 +140,7 @@ export default Vue.extend({
             uploadAddressAndAuth = data.data
           }
           // 2. 调用uploader.setUploadAuthAndAddress设置上传凭证
-          ;(this.uploader as any).setUploadAuthAndAddress(
+          ;(this.uploader).setUploadAuthAndAddress(
             uploadInfo,
             uploadAddressAndAuth.uploadAuth,
             uploadAddressAndAuth.uploadAddress,
@@ -149,26 +149,26 @@ export default Vue.extend({
           // 3. 设置好上传凭证确认没有问题，上传进度开始
         },
         // 文件上传成功
-        onUploadSucceed: function (uploadInfo: any) {
+        onUploadSucceed: function (uploadInfo) {
           console.log('onUploadSucceed', uploadInfo)
         },
         // 文件上传失败
-        onUploadFailed: function (uploadInfo: any, code: any, message: any) {
+        onUploadFailed: function (uploadInfo, code, message) {
           console.log('onUploadFailed', uploadInfo, code, message)
         },
         // 文件上传进度，单位：字节
-        onUploadProgress: (uploadInfo: any, totalSize: any, loadedPercent: any) => {
+        onUploadProgress: (uploadInfo, totalSize, loadedPercent) => {
           console.log('onUploadProgress', uploadInfo, totalSize, loadedPercent)
           if (!uploadInfo.isImage) {
             this.uploadPercent = Math.floor(loadedPercent * 100)
           }
         },
         // 上传凭证超时
-        onUploadTokenExpired: function (uploadInfo: any) {
+        onUploadTokenExpired: function (uploadInfo) {
           console.log('onUploadTokenExpired', uploadInfo)
         },
         // 全部文件上传结束
-        onUploadEnd: async (uploadInfo: any) => {
+        onUploadEnd: async (uploadInfo) => {
           this.isUploadSuccess = true
           // console.log('onUploadEnd', uploadInfo)
           // 转码
@@ -176,7 +176,7 @@ export default Vue.extend({
             lessonId: this.$route.query.lessonId,
             coverImageUrl: this.imageURL,
             fileId: this.videoId,
-            fileName: (this.video as any).files[0].name
+            fileName: (this.video).files[0].name
           })
           console.log('请求转码', data)
 
@@ -199,18 +199,18 @@ export default Vue.extend({
       this.isUploadSuccess = false
       this.uploadPercent = 0
       this.isTransCodeSuccess = false
-      const videoFile = (this.$refs['video-file'] as any).files[0]
-      const imageFile = (this.$refs['image-file'] as any).files[0]
-      const uploader = this.uploader as any
-      console.log(videoFile, imageFile)
+      const videoFile = (this.$refs['video-file']).files[0]
+      const imageFile = (this.$refs['image-file']).files[0]
+      // const uploader = this.uploader
+      // console.log(videoFile, imageFile)
 
       // 将用户所选的文件添加到上传列表中
       // 一旦开始上传，它会按照列表中添加的顺序进行上传
-      uploader.addFile(imageFile, null, null, null, '{"Vod":{}}')
+      this.uploader.addFile(imageFile, null, null, null, '{"Vod":{}}')
       // uploader.addFile(videoFile, null, null, null, '{"Vod":{}}')
 
       // 开始上传
-      uploader.startUpload();
+      this.uploader.startUpload();
     }
   }
 })

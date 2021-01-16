@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { Menu, Tree } from 'element-ui'
+import { Tree } from 'element-ui'
 import Vue from 'vue'
 import { getMenuNodeList, allocateRoleMenus, getRoleMenus } from '../../services/menu'
 

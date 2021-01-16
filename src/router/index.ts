@@ -30,9 +30,31 @@ const routes: Array<RouteConfig> = [
         component: () => import(/* webpackChunkName： 'advert' */'@/views/advert/index.vue')
       },
       {
+        path: '/addAdvertise',
+        name: 'addAdvertise',
+        component: () => import(/* webpackChunkName： 'addAdvertise' */'@/views/advert/addAdvertise.vue')
+      },
+      {
+        path: '/advert/:advertId/updateAdvertise',
+        name: 'updateAdvertise',
+        component: () => import(/* webpackChunkName： 'updateAdvertise' */'@/views/advert/updateAdvertise.vue'),
+        props: true
+      },
+      {
         path: '/advert-space',
         name: 'advert-space',
         component: () => import(/* webpackChunkName： 'advert-space' */'@/views/advert-space/index.vue')
+      },
+      {
+        path: '/addAdvertiseSpace',
+        name: 'addAdvertiseSpace',
+        component: () => import(/* webpackChunkName： 'addAdvertiseSpace' */'@/views/advert-space/addAdvertiseSpace.vue')
+      },
+      {
+        path: '/advert/:spaceId/updateAdvertiseSpace',
+        name: 'updateAdvertiseSpace',
+        component: () => import(/* webpackChunkName： 'updateAdvertiseSpace' */'@/views/advert-space/updateAdvertiseSpace.vue'),
+        props: true
       },
       {
         path: '/course',

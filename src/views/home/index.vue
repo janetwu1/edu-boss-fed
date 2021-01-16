@@ -1,12 +1,18 @@
 <template>
-  <div class="home">首页管理</div>
+  <div class="home">
+    <course></course>
+  </div>
 </template>
 
 <script>
 import Vue from 'vue'
+import course from '../course'
 
 export default Vue.extend({
-  name: 'homeIndex'
+  name: 'homeIndex',
+  components: {
+    course
+  }
 })
 </script>
 

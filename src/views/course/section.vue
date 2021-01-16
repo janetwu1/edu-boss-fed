@@ -187,7 +187,7 @@ export default Vue.extend({
       this.course = data.data
     },
     async handleAddSection () {
-      const { data } = await saveOrUpdateSection(this.section)
+      await saveOrUpdateSection(this.section)
       this.loadSections()
       this.isAddSectionShow = false
       ;(this.$refs['section-form'] as Form).resetFields()
@@ -237,7 +237,7 @@ export default Vue.extend({
       this.isAddLessonShow = true
     },
     async handleSectionStatusChange (section: any) {
-      const { data } = await saveOrUpdateSection(section)
+      await saveOrUpdateSection(section)
       this.$message.success('操作成功')
     },
     async handleLessonStatusChange (lesson: any) {
@@ -249,7 +249,7 @@ export default Vue.extend({
       // 拖拽时判定目标节点能否被放置。type 参数有三种情况：'prev'、'inner' 和 'next'，分别表示放置在目标节点前、插入至目标节点和放置在目标节点后
       return draggingNode.data.sectionId === dropNode.data.sectionId && type !== 'inner'
     },
-    async handleSort (dragNode: any, dropNode: any, type: any, event: any) {
+    async handleSort (dragNode: any, dropNode: any) {
       try {
         await dropNode.parent.childNodes.map((item: any, index: number) => {
           if (dragNode.data.lessonDTOS) {

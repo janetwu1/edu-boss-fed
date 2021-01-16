@@ -1,5 +1,5 @@
 <template>
-  <div class="course-image">
+  <div class="advert-image">
       <el-progress
        v-if="isUploading"
         type="circle"
@@ -25,10 +25,10 @@
 <script lang="ts">
 // import { Form } from 'element-ui';
 import Vue from 'vue'
-import { uploadCourseImage } from '../../../services/course'
+import { uploadImage } from '../../../services/upload'
 
 export default Vue.extend({
-  name: 'courseImage',
+  name: 'advertImage',
   props: {
     value: {
       type: String
@@ -63,12 +63,12 @@ export default Vue.extend({
       this.isUploading = true
       const fd = new FormData()
       fd.append('file', option.file)
-      const { data } = await uploadCourseImage(fd, e => {
+      const { data } = await uploadImage(fd, e => {
         // 环形进度条
         this.percentage = Math.floor(e.loaded / e.total * 100)
       })
       // this.course.courseListImg = data.data.name
-      this.$emit('input', data.data.name)
+      this.$emit('input', data.content.name)
       this.isUploading = false
       this.percentage = 0
     }

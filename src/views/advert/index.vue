@@ -1,12 +1,18 @@
 <template>
-  <div class="advert">广告管理</div>
+  <div class="advert">
+    <advert-list></advert-list>
+  </div>
 </template>
 
 <script>
 import Vue from 'vue'
+import AdvertList from './components/advert-list.vue'
 
 export default Vue.extend({
-  name: 'homeIndex'
+  name: 'advertIndex',
+  components: {
+    AdvertList
+  }
 })
 </script>
 

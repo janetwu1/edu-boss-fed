@@ -88,7 +88,7 @@ export default Vue.extend({
     async loadRoleAll () {
       const { data } = await getAllRoles()
       this.roles = data.data
-      console.log(data)
+      // console.log(data)
     },
     handleEdit (row: any) {
       this.addRoleDialog = true

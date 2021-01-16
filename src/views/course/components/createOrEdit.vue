@@ -241,7 +241,7 @@ export default Vue.extend({
   methods: {
     async loadCourses () {
       const { data } = await getCourseById(this.courseId)
-      console.log(data)
+      // console.log(data)
       const { activityCourseDTO } = data.data
       if (activityCourseDTO !== null) {
         activityCourseDTO.beginTime = moment(activityCourseDTO.beginTime).format('YYYY-MM-DD')
@@ -250,7 +250,7 @@ export default Vue.extend({
       this.course = data.data
     },
     async handleSave () {
-      const { data } = await saveOrUpdateCourse(this.course)
+      await saveOrUpdateCourse(this.course)
       this.$router.back()
       // console.log(data)
     }
