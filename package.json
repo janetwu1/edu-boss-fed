@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "preview": "node test-serve/app.js"
+    "preview": "node test-serve/app.js",
+    "pm2":"pm2 preview processes.json"
   },
   "dependencies": {
     "axios": "^0.21.1",
