@@ -2,7 +2,11 @@
   <div class="resource-list">
     <el-card class="box-card">
         <div slot="header" class="clearfix">
-           <el-form :inline="true" ref="form" :model="form" class="demo-form-inline">
+           <el-form
+           :inline="true"
+           ref="form"
+           :model="form"
+           class="demo-form-inline">
             <el-form-item label="资源名称" prop="name">
                 <el-input v-model="form.name" placeholder="资源名称"></el-input>
             </el-form-item>
@@ -10,7 +14,9 @@
                 <el-input v-model="form.url" placeholder="资源路径"></el-input>
             </el-form-item>
             <el-form-item label="资源分类" prop="categoryId">
-                <el-select v-model="form.categoryId" clearable placeholder="请选择资源分类">
+                <el-select
+                 v-model="form.categoryId"
+                  clearable placeholder="请选择资源分类">
                 <el-option
                 v-for="item in resourceCategories"
                 :key="item.id"
@@ -81,13 +87,51 @@
       layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
     </el-card>
+    <el-dialog
+  title="提示"
+  :visible.sync="dialogVisible"
+  width="50%">
+          <el-form  :model="resourceForm" ref="resourceForm"  label-width="100px" class="demo-ruleForm">
+        <el-form-item required label="资源名称" prop="name">
+            <el-input v-model="resourceForm.name"></el-input>
+        </el-form-item>
+          <el-form-item required label="资源路径" prop="url">
+            <el-input v-model="resourceForm.url"></el-input>
+        </el-form-item>
+            <el-form-item required label="资源分类" prop="categoryId">
+                <el-select v-model="resourceForm.categoryId" clearable placeholder="请选择资源分类">
+                <el-option
+                v-for="item in resourceCategories"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"></el-option>
+                <!-- <el-option label="区域二" value="beijing"></el-option> -->
+                </el-select>
+            </el-form-item>
+          <el-form-item label="描述" prop="description">
+            <el-input
+            v-model="resourceForm.description"
+            type="textarea"></el-input>
+        </el-form-item>
+
+        </el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="handleSave">确 定</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>
 
 <script lang="ts">
 import { Form } from 'element-ui'
 import Vue from 'vue'
-import { getResourcePages, getResourceCategory } from '../../../services/resource'
+import {
+  getResourcePages,
+  getResourceCategory,
+  saveOrUpdate,
+  deleteResource
+} from '../../../services/resource'
 
 export default Vue.extend({
   name: 'ResourceList',
@@ -103,7 +147,15 @@ export default Vue.extend({
       },
       totalCount: 0,
       resourceCategories: [], // 资源分类列表
-      isLoading: true
+      isLoading: true,
+      dialogVisible: false,
+      resourceForm: {
+        id: 0,
+        name: '',
+        categoryId: 0,
+        url: '',
+        description: ''
+      }
     }
   },
   created () {
@@ -113,18 +165,20 @@ export default Vue.extend({
   methods: {
     async loadResourceCategories () {
       const { data } = await getResourceCategory()
-      console.log(data)
+      // console.log(data)
       this.resourceCategories = data.data
     },
     async loadResources () {
       this.isLoading = true // 展示加载中状态
       const { data } = await getResourcePages(this.form)
+      // console.log(data)
       this.resources = data.data.records
+      // this.resource = this.resources
       this.totalCount = data.data.total
       this.isLoading = false // 关闭加载中的状态
     },
     onSubmit () {
-      console.log('submit!');
+      // console.log('submit!');
       this.form.current = 1
       this.loadResources()
     },
@@ -141,11 +195,38 @@ export default Vue.extend({
       date.getHours() + ':' +
        date.getMinutes()
     },
-    handleEdit () {
-      console.log('edit')
+    async handleEdit (data: any) {
+      // const { data } = await GetResource(id)
+      // console.log(data)
+      this.resourceForm.id = data.id
+      this.resourceForm.categoryId = data.categoryId
+      this.resourceForm.url = data.url
+      this.resourceForm.description = data.description
+      this.resourceForm.name = data.name
+      // console.log('edit')
+      this.loadResources()
+      this.dialogVisible = true
     },
-    handleDelete () {
-      console.log('delete')
+    async handleDelete (item: any) {
+      // const { data } = await deleteResource(item.id)
+      this.$confirm('确认删除吗？', '删除提示', {})
+        .then(async () => {
+          // 请求删除操作
+          const { data } = await deleteResource(item.id)
+          if (data.code === '000000') {
+            this.$message.success('删除成功')
+            this.loadResources() // 更新数据列表
+          }
+        })
+        .catch(err => {
+          console.log(err)
+          this.$message.info('已取消删除')
+        })
+    },
+    async handleSave () {
+      await saveOrUpdate(this.resourceForm)
+      this.loadResources()
+      this.dialogVisible = false
     },
     handleSizeChange (val: number) {
     //   console.log(`每页 ${val} 条`)

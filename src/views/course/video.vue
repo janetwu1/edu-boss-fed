@@ -183,7 +183,7 @@ export default({
           // 转码进度
           const timer = setInterval(async () => {
             const { data } = await aliyunTransCodePercent(this.$route.query.lessonId)
-            console.log(data.data)
+            // console.log(data.data)
             if (data.data === 100) {
               this.isTransCodeSuccess = true
               window.clearInterval(timer)

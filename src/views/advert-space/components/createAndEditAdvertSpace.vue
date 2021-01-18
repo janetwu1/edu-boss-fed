@@ -2,7 +2,7 @@
   <div class="add-Advert">
       <el-card>
         <el-form  :model="advertSpaceForm" ref="advertSpaceForm"  label-width="100px" class="demo-ruleForm">
-        <el-form-item label="广告位名称" prop="name">
+        <el-form-item required label="广告位名称" prop="name">
             <el-input v-model="advertSpaceForm.name"></el-input>
         </el-form-item>
 
@@ -52,8 +52,8 @@ export default Vue.extend({
       await saveOrUpdate(this.advertSpaceForm)
       this.$router.back()
     },
-    resetForm (formName) {
-      this.$refs[formName].resetFields();
+    resetForm (formName: any) {
+      (this.$refs[formName] as any).resetFields();
     }
   }
 })

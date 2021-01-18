@@ -53,14 +53,14 @@ export default Vue.extend({
   methods: {
     async loadMenus () {
       const { data } = await getMenuNodeList()
-      console.log(data)
+      // console.log(data)
       this.menus = data.data
     },
 
     async loadRoleMenus () {
       const { data } = await getRoleMenus(this.roleId)
       this.getCheckedKeys(data.data)
-      console.log(data)
+      // console.log(data)
     },
     getCheckedKeys (menus: any) {
       menus.forEach((menu: any) => {

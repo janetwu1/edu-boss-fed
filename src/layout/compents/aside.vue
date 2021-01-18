@@ -47,7 +47,7 @@
         </el-menu-item>
          <el-menu-item index="/advert-space">
               <i class="el-icon-menu"></i>
-                <span slot="title">广告位管理</span>
+                <span slot="title">广告位列表</span>
          </el-menu-item>
       </el-submenu>
     </el-menu>

@@ -54,8 +54,8 @@
     <el-input type="textarea" v-model="advertListForm.htmlContent" ></el-input>
   </el-form-item>
   <el-form-item>
-    <el-button type="primary" @click="submitForm('advertListForm')">提交</el-button>
-    <el-button @click="resetForm('advertListForm')">重置</el-button>
+    <el-button type="primary" @click="submitForm()">提交</el-button>
+    <el-button @click="resetForm()">重置</el-button>
   </el-form-item>
 </el-form>
    </el-card>
@@ -67,6 +67,7 @@ import Vue from 'vue'
 import { saveOrUpdate, getAdById } from '../../../services/advertisement'
 import { getAllSpaces } from '../../../services/advert-sapce'
 import advertImage from './advert-Img.vue'
+import { Form } from 'element-ui'
 // import imageUpload from '../../../components/ImageUpload/index.vue'
 
 export default Vue.extend({
@@ -167,8 +168,8 @@ export default Vue.extend({
       await saveOrUpdate(this.advertListForm)
       this.$router.back()
     },
-    resetForm (advertListForm) {
-      this.$refs[advertListForm].resetFields();
+    resetForm () {
+      (this.$refs.advertListForm as Form).resetFields();
     }
   }
 })

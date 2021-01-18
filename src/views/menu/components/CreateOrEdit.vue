@@ -87,7 +87,7 @@ export default Vue.extend({
   methods: {
     async loadMenuInfo () {
       const { data } = await getEditMenuInfo(this.$route.params.id || -1)
-      console.log(data)
+      // console.log(data)
       if (data.data.menuInfo) {
         this.form = data.data.menuInfo
       }

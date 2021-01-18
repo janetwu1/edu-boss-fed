@@ -194,7 +194,7 @@ export default Vue.extend({
       this.$message.success('操作成功')
     },
     async handleShowAddLesson (data: any) {
-      console.log(data)
+      // console.log(data)
       this.lesson = {
         sectionName: data.sectionName,
         sectionId: data.id,
@@ -210,7 +210,7 @@ export default Vue.extend({
     async handleEditSectionShow (section: any) {
       const { data } = await getBySectionId(section.id)
       this.section = data.data
-      console.log(this.section)
+      // console.log(this.section)
       this.isAddSectionShow = true
     },
 

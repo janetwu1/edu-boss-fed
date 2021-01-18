@@ -10,6 +10,7 @@ import AdvertList from './components/advert-list.vue'
 
 export default Vue.extend({
   name: 'advertIndex',
+  title: '广告管理',
   components: {
     AdvertList
   }

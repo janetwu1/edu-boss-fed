@@ -25,25 +25,12 @@
         prop="spaceId"
         label="广告位置"
        >
-        <template :v-model="advertListForm.spaceId">
-          <!-- <span
-           v-for="item in spaceList"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id"></span> -->
-        </template>
+       <!-- <template slot-scope="scope">
+         <div :model="scope.row.spaceId" >
+           <span>{{ sapceName}}</span>
+        </div>
+       </template>  -->
       </el-table-column>
-        <!-- <el-form-item label="广告位置" prop="spaceId">
-    <el-select v-model="advertListForm.spaceId" placeholder="请选择">
-    <el-option
-      v-for="item in spaces"
-      :key="item.id"
-      :label="item.name"
-      :value="item.id">
-    </el-option>
-  </el-select>
-
-</el-form-item> -->
       <el-table-column
         label="广告图片">
        <template slot-scope="scope">
@@ -102,11 +89,17 @@ import { getSpaceById } from '../../../services/advert-sapce'
 
 export default Vue.extend({
   name: 'advert-List',
+  props: {
+    spaceId: {
+      type: Number || String
+    }
+  },
   data () {
     return {
       formInline: {
         name: ''
       },
+      sapceId: '',
       advertList: [],
       sapceName: '',
       createTime: '',
@@ -116,27 +109,18 @@ export default Vue.extend({
       },
       endTime: '',
       status: 0,
-      adverId: ''
+      adverId: '',
+      advertspace: []
     }
   },
   created () {
     this.loadAdLists()
-    this.loadSpace()
+    // this.loadSpace()
   },
   methods: {
     async loadAdLists () {
       const { data } = await getAdList()
-      console.log(data)
       this.advertList = data.content
-      this.spaceId = data.content.spaceId
-    },
-
-    async loadSpace () {
-    //   const { data } = await getAllSpaces()
-    //   console.log(data)
-      const { data } = await getSpaceById(this.spaceId)
-      this.spaceList = data.content
-      console.log(data)
     },
     async onStateChange (advertList: any) {
       await updateStatus({
@@ -146,6 +130,11 @@ export default Vue.extend({
 
       // console.log(data)
       this.$message.success(`${advertList.status === 0 ? '下线' : '上线'}成功`)
+    },
+    async getSpace (item: any) {
+      // console.log(item.spaceId)
+      const { data } = await getSpaceById(item.spaceId)
+      console.log(data)
     }
   }
 })
